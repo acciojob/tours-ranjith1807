@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Loading from './Loading';
 import Tours from './Tours';
 
-const url = 'https://course-api.com/react-tours-project';
+const url = 'https://www.course-api.com/react-tours-project';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -13,18 +13,20 @@ function App() {
     setTours(newTours);
   };
 
-  const fetchTours = async () => {
+ const fetchTours = () => {
     setLoading(true);
-    try {
-      // The test platform likely expects an actual fetch call
-      const response = await fetch(url);
-      const toursData = await response.json();
-      setLoading(false);
-      setTours(toursData);
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
-    }
+    
+    // Using standard Promises (.then) instead of async/await
+    fetch(url)
+      .then((response) => response.json())
+      .then((toursData) => {
+        setLoading(false);
+        setTours(toursData);
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log(error);
+      });
   };
 
   useEffect(() => {
